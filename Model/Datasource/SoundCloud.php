@@ -55,17 +55,10 @@ class SoundCloud extends ApisSource {
 /* 		'permissions'			=> 'read', // read, write, delete */
   );
     
-/**
- * Loads HttpSocket class
- *
- * @param array $config
- * @param HttpSocket $Http
- */
-/*
-	public function __construct($config, $Http = null) {
-		parent::__construct($config);
-	}
-*/
+  # object => source
+  public $map = array(
+    'title' => 'title',
+  );
 /**
  * Just-In-Time callback for any last-minute request modifications
  *

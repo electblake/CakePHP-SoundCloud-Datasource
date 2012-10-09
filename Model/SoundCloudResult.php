@@ -73,11 +73,13 @@ class SoundCloudResult extends ApiResult {
       
       $expand_arrays = array('user', 'label');
       foreach ($expand_arrays as $expand_field) {
-        foreach ($track_source[$expand_field] as $name => $val) {
-          $track_source['source_'.$expand_field.'_'.$name] = $val;
-          unset($track_source[$expand_field][$name]);
+        if (isset($track_source[$expand_field]) and is_array($track_source[$expand_field])) {
+          foreach ($track_source[$expand_field] as $name => $val) {
+            $track_source['source_'.$expand_field.'_'.$name] = $val;
+            unset($track_source[$expand_field][$name]);
+          }
+          unset($track_source[$expand_field]); 
         }
-        unset($track_source[$expand_field]);
       }
 
       
