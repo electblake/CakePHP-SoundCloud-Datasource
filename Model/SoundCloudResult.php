@@ -1,26 +1,22 @@
 <?php
-App::uses('ApiResult', 'SoundCloud.Model');
+App::uses('ApisResult', 'SoundCloud.Model');
 /**
  * SourcesSoundcloud Model
  *
  * @property Source $Source
  * @property Track $Track
  */
-class SoundCloudResult extends ApiResult {
+class SoundcloudResult extends ApisResult {
 
-/**
+ /**
  * Display field
  *
  * @var string
  */
-/*   public $useTable = 'sources_soundclouds'; */
 	public $displayField = 'title';
-	public $useTable = 'results_soundcloud';
+	public $useTable = 'soundcloud_results';
 
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
+ /**
  * belongsTo associations
  *
  * @var array
@@ -43,11 +39,15 @@ class SoundCloudResult extends ApiResult {
 	);
 	
 	
+  # object => source
+  public $track_map = array(
+    'title' => 'title',
+  );
+	
 	public function beforeSave($options = array()) {
 	 
 	 if (is_array($this->data)) {
-      
-      $track_source = $this->data['SoundCloudResult'];
+      $track_source = $this->data['SoundcloudResult'];
       
       $day = $track_source['release_day'];
       $month = $track_source['release_month'];
@@ -82,8 +82,24 @@ class SoundCloudResult extends ApiResult {
         }
       }
 
+      $this->data['SoundcloudResult'] = $track_source;
       
-      $this->data['SoundCloudResult'] = $track_source;
   }
  }
+ 
+ /*
+public function afterSave($created) {
+   
+   #$this->Track->read(null, $this->Track->id);
+   if (is_array($this->data) and is_array($this->track_map)) {
+      foreach ($this->track_map as $track_field => $source_field) {
+        $source_data = $this->data['SoundcloudResult'][$source_field];
+        $this->Track->set($track_field, $source_data);
+      }
+      $this->Track->save();
+   }
+   
+ }
+*/
+ 
 }

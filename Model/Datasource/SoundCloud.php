@@ -28,7 +28,7 @@ class SoundCloud extends ApisSource {
  */
 	public $config = array();
 	
-/**
+ /**
  * Holds a configuration map
  *
  * @var array
@@ -44,22 +44,9 @@ class SoundCloud extends ApisSource {
    */
 	public $options = array(
 	  'format' => 'json',
-/* 		'ps'		=> '&', // param separator */
-/* 		'kvs'		=> '=', // key-value separator */
-/* 		'user_agent' =>  'CakePHP SoundCloud Datasource', */
-/*     'protocol'   			=> 'https', */
-/*     'http_port'  			=> 80, */
-/*     'timeout'    			=> 10, */
-/*     'param_separator'		=> '&', */
-/*     'key_value_separator'	=> '=', */
-/* 		'permissions'			=> 'read', // read, write, delete */
   );
-    
-  # object => source
-  public $map = array(
-    'title' => 'title',
-  );
-/**
+  
+ /**
  * Just-In-Time callback for any last-minute request modifications
  *
  * @param object $model
@@ -67,37 +54,13 @@ class SoundCloud extends ApisSource {
  * @return array $request
  */
 	public function beforeRequest(&$model, $request) {
-
-  	/*
-    if (!empty($request['uri']['path'])) {
-      $request['uri']['query']['method'] = $request['uri']['path'];
-      $request['uri']['path'] = '';
-    }
-    */
     
     $format = $this->options['format'] ? $this->options['format'] : 'fail';
     
     $request['header']['Accept'] = 'application/'.$format;
     $request['redirect'] = true;
     
-    /*
-if ($track_url = $request['uri']['query']['url']) {
-      if (urldecode($track_url) == $track_url) {
-        $request['uri']['query']['url'] = urlencode($track_url);
-      }
-    }
-*/
-    
     $request['uri']['query']['client_id'] = $this->config['client_id'];
-    
-/*
-	  Debug($this->config);
-	  Debug($this->options);
-*/
-    /*
-	  Debug((string)$request['uri']['host']);
-	  Debug($request);
-	  */
 	  
 		return $request;
 	}
